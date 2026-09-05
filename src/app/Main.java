@@ -28,8 +28,8 @@ public class Main {
         Order roopakOrder = new Order(1, roopak, geetham, new FoodItem[]{sambarVada, vegBriyani});
         Order madhuOrder = new Order(madhu, sangeetha);
         
-        roopakOrder.displayOrderInfo();
-        madhuOrder.displayOrderInfo();
+        // roopakOrder.displayOrderInfo();
+        // madhuOrder.displayOrderInfo();
         
         System.out.println("========================================");
         
@@ -37,5 +37,11 @@ public class Main {
         System.out.println("Total Orders Created: " + AppConfig.getNumberOfOrders());
         
         System.out.println("========================================");
+
+        RestaurantOwner gordan = new RestaurantOwner(1, "Gordan Ramsay", "9786756456");
+        
+        roopak.displayRole();
+        gordan.displayRole();
+
     }
 }

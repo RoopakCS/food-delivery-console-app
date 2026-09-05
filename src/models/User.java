@@ -10,4 +10,8 @@ public class User {
         this.name = name;
         this.phone = phone;
     }
+
+    public void displayRole() {
+        System.out.println("I am a User");
+    }
 }
