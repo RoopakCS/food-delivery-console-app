@@ -3,10 +3,10 @@ package models;
 import utils.AppConfig;
 
 public class Order {
-    int orderId;
-    Customer customer;
-    Restaurant restaurant;
-    FoodItem[] foodItems;
+    private int orderId;
+    private Customer customer;
+    private Restaurant restaurant;
+    private FoodItem[] foodItems;
 
     public Order(Customer customer, Restaurant restaurant) {
         this(0, customer, restaurant, null);
@@ -20,6 +20,60 @@ public class Order {
 
         AppConfig.incrementOrderCount();
     }
+
+    // Getters
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public FoodItem[] getFoodItems() {
+        return foodItems;
+    }
+
+    // Method for retrieving the current total
+
+    public double getTotal() {
+        double sum = 0;
+
+        if(foodItems != null) {
+            for(FoodItem item: foodItems) {
+                sum += item.price;
+            }
+        }
+
+        return sum + AppConfig.getDeliveryCharge();
+    }
+
+    // To Prevent an order from accepting more than the configured maximum number of items
+
+    public void addItem(FoodItem item) {
+        if (foodItems != null && foodItems.length >= AppConfig.getMaxItemsPerOrder()) {
+            System.out.println("Cannot add more items. Maximum limit of " + AppConfig.getMaxItemsPerOrder() + " reached.");
+            return;
+        }
+    
+        if (foodItems == null) {
+            foodItems = new FoodItem[]{item};
+        } else {
+            FoodItem[] newItems = new FoodItem[foodItems.length + 1];
+            for (int i = 0; i < foodItems.length; i++) {
+                newItems[i] = foodItems[i];
+            }
+            newItems[foodItems.length] = item;
+            foodItems = newItems;
+        }
+    }
+
+    // Method for displaying the order
 
     public void displayOrderInfo() {
         System.out.println("========================================");
@@ -42,6 +96,9 @@ public class Order {
             }
         }
 
+        System.out.println("Total (incl. delivery charge): ₹" + getTotal());
         System.out.println("Delivery Charge: ₹" + AppConfig.getDeliveryCharge());
     }
+
+    
 }

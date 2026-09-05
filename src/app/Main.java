@@ -31,7 +31,7 @@ public class Main {
         Order roopakOrder = new Order(1, roopak, geetham, new FoodItem[]{sambarVada, vegBriyani});
         Order madhuOrder = new Order(madhu, sangeetha);
         
-        // roopakOrder.displayOrderInfo();
+        roopakOrder.displayOrderInfo();
         // madhuOrder.displayOrderInfo();
         
         System.out.println("========================================");
@@ -55,10 +55,11 @@ public class Main {
         // orderService.processPayment(upiPayment);
         // orderService.processPayment(cardPayment);
 
-        RestaurantService restaurantService = new RestaurantService();
+        // RestaurantService restaurantService = new RestaurantService();
 
-        restaurantService.searchRestaurant("Geetham");
-        restaurantService.searchRestaurant("Geetham", "Chennai");
-        restaurantService.searchRestaurant("Geetham", "Chennai", 2);
+        // restaurantService.searchRestaurant("Geetham");
+        // restaurantService.searchRestaurant("Geetham", "Chennai");
+        // restaurantService.searchRestaurant("Geetham", "Chennai", 2);
+
     }
 }
