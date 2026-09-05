@@ -1,6 +1,9 @@
 package app;
 
 import models.*;
+import payments.*;
+import services.OrderService;
+import services.RestaurantService;
 import utils.AppConfig;
 
 public class Main {
@@ -40,8 +43,22 @@ public class Main {
 
         RestaurantOwner gordan = new RestaurantOwner(1, "Gordan Ramsay", "9786756456");
         
-        roopak.displayRole();
-        gordan.displayRole();
+        // roopak.displayRole();
+        // gordan.displayRole();
 
+        // Payment cardPayment = new CardPayment();
+        // Payment upiPayment = new UPIPayment();
+        // Payment cashPayment = new CashPayment();
+
+        // OrderService orderService = new OrderService();
+        // orderService.processPayment(cashPayment);
+        // orderService.processPayment(upiPayment);
+        // orderService.processPayment(cardPayment);
+
+        RestaurantService restaurantService = new RestaurantService();
+
+        restaurantService.searchRestaurant("Geetham");
+        restaurantService.searchRestaurant("Geetham", "Chennai");
+        restaurantService.searchRestaurant("Geetham", "Chennai", 2);
     }
 }
