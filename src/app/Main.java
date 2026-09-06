@@ -7,6 +7,7 @@ import interfaces.Trackable;
 import models.*;
 import payments.*;
 import repository.Repository;
+import services.OrderManager;
 import services.OrderService;
 import services.RestaurantService;
 import utils.AppConfig;
@@ -205,46 +206,105 @@ public class Main {
 
         // Exceptions
 
-        OrderService orderService = new OrderService();
-        Restaurant restaurant = new Restaurant(1, "Chennai Spice", "Anna Nagar");
-        Customer customer = new Customer(1, "Arun", "9876543210", new Address("MG Road", 600001));
-        Payment upi = new UPIPayment();
+        // OrderService orderService = new OrderService();
+        // Restaurant restaurant = new Restaurant(1, "Chennai Spice", "Anna Nagar");
+        // Customer customer = new Customer(1, "Arun", "9876543210", new Address("MG Road", 600001));
+        // Payment upi = new UPIPayment();
 
-        System.out.println("=== Starting Order Processing Tests ===\n");
+        // System.out.println("=== Starting Order Processing Tests ===\n");
 
-        // TEST 1: Empty food items
-        try {
-            System.out.println("Test 1: Processing empty order...");
-            Order emptyOrder = new Order(101, customer, restaurant, new FoodItem[]{});
-            orderService.processOrder(emptyOrder, upi, 100);
-        } catch (InvalidOrderException | PaymentException e) {
-            System.out.println("Handled Error: " + e.getMessage() + "\n");
+        // // TEST 1: Empty food items
+        // try {
+        //     System.out.println("Test 1: Processing empty order...");
+        //     Order emptyOrder = new Order(101, customer, restaurant, new FoodItem[]{});
+        //     orderService.processOrder(emptyOrder, upi, 100);
+        // } catch (InvalidOrderException | PaymentException e) {
+        //     System.out.println("Handled Error: " + e.getMessage() + "\n");
+        // }
+
+        // // TEST 2: Invalid payment amount
+        // try {
+        //     System.out.println("Test 2: Processing order with insufficient payment...");
+        //     FoodItem biryani = new FoodItem(1, "Biryani", 200);
+        //     Order normalOrder = new Order(102, customer, restaurant, new FoodItem[]{biryani});
+        //     // Total = 200 + delivery charge (50) = 250, but paying only 100
+        //     orderService.processOrder(normalOrder, upi, 100);
+        // } catch (InvalidOrderException | PaymentException e) {
+        //     System.out.println("Handled Error: " + e.getMessage() + "\n");
+        // }
+
+        // // TEST 3: Already completed order
+        // try {
+        //     System.out.println("Test 3: Processing order twice...");
+        //     FoodItem dosa = new FoodItem(2, "Dosa", 50);
+        //     Order validOrder = new Order(103, customer, restaurant, new FoodItem[]{dosa});
+        //     // First time - valid
+        //     orderService.processOrder(validOrder, upi, 200);
+        //     // Second time - triggers already completed error
+        //     orderService.processOrder(validOrder, upi, 200);
+        // } catch (InvalidOrderException | PaymentException e) {
+        //     System.out.println("Handled Error: " + e.getMessage() + "\n");
+        // }
+
+        // System.out.println("=== Application finished safely without crashing! ===");
+
+        Customer c1 = new Customer(1, "Arun", "9876543210", new Address("Street 1", 600001));
+        Customer c2 = new Customer(2, "Meena", "9876543211", new Address("Street 2", 600002));
+        
+        Restaurant r1 = new Restaurant(1, "Chennai Spice", "Anna Nagar");
+        FoodItem biryani = new FoodItem(1, "Biryani", 220);
+        FoodItem paneer = new FoodItem(2, "Paneer Rice", 180);
+        FoodItem lime = new FoodItem(3, "Fresh Lime", 50);
+        
+        // Menu collection test
+        r1.addMenuItem(biryani);
+        r1.addMenuItem(paneer);
+        r1.addMenuItem(lime);
+        r1.displayMenu();
+
+        OrderManager manager = new OrderManager();
+
+        // 1. Add 5 orders
+        System.out.println("\n1. Adding 5 orders...");
+        manager.addOrder(new Order(1001, c1, r1, new FoodItem[]{biryani}));
+        manager.addOrder(new Order(1002, c2, r1, new FoodItem[]{paneer}));
+        manager.addOrder(new Order(1003, c1, r1, new FoodItem[]{lime}));
+        manager.addOrder(new Order(1004, c2, r1, new FoodItem[]{biryani, lime}));
+        manager.addOrder(new Order(1005, c1, r1, new FoodItem[]{paneer, lime}));
+
+        // 2. Display all orders
+        System.out.println("\n2. Displaying all orders:");
+        manager.displayAllOrders();
+
+        // 3. Find order 1003
+        System.out.println("\n3. Finding order 1003:");
+        Order found = manager.findOrderById(1003);
+        if (found != null) {
+            System.out.println("Found Order #1003! Details:");
+            found.displayOrderInfo();
         }
 
-        // TEST 2: Invalid payment amount
-        try {
-            System.out.println("Test 2: Processing order with insufficient payment...");
-            FoodItem biryani = new FoodItem(1, "Biryani", 200);
-            Order normalOrder = new Order(102, customer, restaurant, new FoodItem[]{biryani});
-            // Total = 200 + delivery charge (50) = 250, but paying only 100
-            orderService.processOrder(normalOrder, upi, 100);
-        } catch (InvalidOrderException | PaymentException e) {
-            System.out.println("Handled Error: " + e.getMessage() + "\n");
-        }
+        // 4. Remove order 1002
+        System.out.println("\n4. Removing order 1002:");
+        manager.removeOrder(1002);
 
-        // TEST 3: Already completed order
-        try {
-            System.out.println("Test 3: Processing order twice...");
-            FoodItem dosa = new FoodItem(2, "Dosa", 50);
-            Order validOrder = new Order(103, customer, restaurant, new FoodItem[]{dosa});
-            // First time - valid
-            orderService.processOrder(validOrder, upi, 200);
-            // Second time - triggers already completed error
-            orderService.processOrder(validOrder, upi, 200);
-        } catch (InvalidOrderException | PaymentException e) {
-            System.out.println("Handled Error: " + e.getMessage() + "\n");
-        }
+        // 5. Display the remaining orders
+        System.out.println("\n5. Displaying remaining orders after removal:");
+        manager.displayAllOrders();
 
-        System.out.println("=== Application finished safely without crashing! ===");
+        // 6. Add another order
+        System.out.println("\n6. Adding order 1006...");
+        manager.addOrder(new Order(1006, c2, r1, new FoodItem[]{biryani}));
+
+        // 7. Display the new count
+        System.out.println("\n7. Total Orders Count: " + manager.getOrderCount());
+
+        // --- EXPERIMENT: Invalid indexed access ---
+        System.out.println("\n--- Experiment: Testing Out-of-Bounds Index ---");
+        try {
+            manager.getOrderByIndex(99); // index 99 does not exist
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Handled expected error: Invalid index access: " + e.getMessage());
+        }
     }
 }
