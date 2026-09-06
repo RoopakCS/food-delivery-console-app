@@ -96,8 +96,8 @@ public class Order {
             }
         }
 
-        System.out.println("Total (incl. delivery charge): ₹" + getTotal());
         System.out.println("Delivery Charge: ₹" + AppConfig.getDeliveryCharge());
+        System.out.println("Total (incl. delivery charge): ₹" + getTotal());
     }
 
     

@@ -9,16 +9,23 @@ import utils.AppConfig;
 public class Main {
     public static void main(String[] args) {
         // AppConfig
+        
         System.out.println("========================================");
         System.out.println("App: " + AppConfig.getAppName());
+        
+        // Customers
         
         Customer roopak = new Customer(1, "Roopak", "9994454835", new Address(254, "Senthamil Nagar", "Ramanathapuram", 623536));
 
         Customer madhu = new Customer(2, "Madhu Bashini", "7358115463", new Address(143, "Latheef Castle", "Ambattur", 600032));
         
+        // Restaurants
+
         Restaurant geetham = new Restaurant(1, "Geetham", "Ambattur");
         Restaurant sangeetha = new Restaurant(2, "Sangeetha", "Anna Nagar");
         
+        // Food items
+
         FoodItem vegBriyani = new FoodItem(1, "Veg Briyani", 60);
         FoodItem gobiFriedRice = new FoodItem(2, "Gobi Fried Rice", 100);
         FoodItem gobi65 = new FoodItem(3, "Gobi 65", 40);
@@ -28,18 +35,21 @@ public class Main {
         FoodItem water = new FoodItem("Water");
         FoodItem dosa = new FoodItem("Dosa", 45);
         
+        // Orders
+
         Order roopakOrder = new Order(1, roopak, geetham, new FoodItem[]{sambarVada, vegBriyani});
         Order madhuOrder = new Order(madhu, sangeetha);
         
-        roopakOrder.displayOrderInfo();
+        // roopakOrder.displayOrderInfo();
         // madhuOrder.displayOrderInfo();
         
-        System.out.println("========================================");
+        // System.out.println("========================================");
         
-        System.out.println("Delivery Charge: ₹" + AppConfig.getDeliveryCharge());
-        System.out.println("Total Orders Created: " + AppConfig.getNumberOfOrders());
+        // System.out.println("Total Orders Created: " + AppConfig.getNumberOfOrders());
         
-        System.out.println("========================================");
+        // System.out.println("========================================");
+
+        // Restaurant onwer
 
         RestaurantOwner gordan = new RestaurantOwner(1, "Gordan Ramsay", "9786756456");
         
@@ -60,6 +70,14 @@ public class Main {
         // restaurantService.searchRestaurant("Geetham");
         // restaurantService.searchRestaurant("Geetham", "Chennai");
         // restaurantService.searchRestaurant("Geetham", "Chennai", 2);
+
+        // Delivery order
+
+        DeliveryOrder standardOrder = new StandardOrder(0, madhu, sangeetha);
+        standardOrder.displayOrderInfo();
+
+        DeliveryOrder expressOrder = new ExpressOrder(1, roopak, geetham);
+        expressOrder.displayOrderInfo();
 
     }
 }
