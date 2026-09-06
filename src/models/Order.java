@@ -1,8 +1,9 @@
 package models;
 
+import interfaces.Trackable;
 import utils.AppConfig;
 
-public class Order {
+public class Order implements Trackable {
     private int orderId;
     private Customer customer;
     private Restaurant restaurant;
@@ -98,6 +99,11 @@ public class Order {
 
         System.out.println("Delivery Charge: ₹" + AppConfig.getDeliveryCharge());
         System.out.println("Total (incl. delivery charge): ₹" + getTotal());
+    }
+
+    @Override
+    public String trackOrder() {
+        return "Order #" + orderId + " is being prepared at " + restaurant.name;
     }
 
     

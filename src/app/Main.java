@@ -1,5 +1,7 @@
 package app;
 
+import interfaces.Discountable;
+import interfaces.Trackable;
 import models.*;
 import payments.*;
 import services.OrderService;
@@ -73,11 +75,26 @@ public class Main {
 
         // Delivery order
 
-        DeliveryOrder standardOrder = new StandardOrder(0, madhu, sangeetha);
-        standardOrder.displayOrderInfo();
+        // DeliveryOrder standardOrder = new StandardOrder(0, madhu, sangeetha);
+        // standardOrder.displayOrderInfo();
 
-        DeliveryOrder expressOrder = new ExpressOrder(1, roopak, geetham);
-        expressOrder.displayOrderInfo();
+        // DeliveryOrder expressOrder = new ExpressOrder(1, roopak, geetham);
+        // expressOrder.displayOrderInfo();
 
+        // Interfaces
+
+        Trackable trackableOrder = roopakOrder;
+        System.out.println(trackableOrder.trackOrder());
+
+        Discountable discountableItem = vegBriyani;
+        System.out.println("Discount: ₹" + discountableItem.calculateDiscount());
+
+        SpecialOrder specialOrder = new SpecialOrder(1, "Festival Combo", 500);
+
+        Trackable splTrackable = specialOrder;
+        Discountable spDiscountable = specialOrder;
+
+        System.out.println(splTrackable.trackOrder());
+        System.out.println("Discount: ₹" + spDiscountable.calculateDiscount());
     }
 }

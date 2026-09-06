@@ -1,6 +1,8 @@
 package models;
 
-public class FoodItem {
+import interfaces.Discountable;
+
+public class FoodItem implements Discountable {
     int id;
     String name;
     double price;
@@ -17,5 +19,10 @@ public class FoodItem {
         this.id = id;
         this.name = name;
         this.price = price;
+    }
+
+    @Override
+    public double calculateDiscount() {
+        return price * 0.10;
     }
 }
