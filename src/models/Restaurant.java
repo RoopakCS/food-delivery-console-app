@@ -10,4 +10,9 @@ public class Restaurant {
         this.name = name;
         this.location = location;
     }
+
+    @Override
+    public String toString() {
+        return "Restaurant [name=" + name + ", location=" + location + "]";
+    }
 }

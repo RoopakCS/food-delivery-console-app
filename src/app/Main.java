@@ -4,9 +4,11 @@ import interfaces.Discountable;
 import interfaces.Trackable;
 import models.*;
 import payments.*;
+import repository.Repository;
 import services.OrderService;
 import services.RestaurantService;
 import utils.AppConfig;
+import utils.Pair;
 
 public class Main {
     public static void main(String[] args) {
@@ -103,20 +105,100 @@ public class Main {
 
         // Object cloning
 
-        FoodItem originalCB = new FoodItem("Chicken Briyani", 220);
+        // FoodItem originalCB = new FoodItem("Chicken Briyani", 220);
 
-        FoodItem clonedCB = originalCB.clone();
+        // FoodItem clonedCB = originalCB.clone();
 
-        System.out.println("--- Before Modification ---");
-        System.out.println("Original: " + originalCB);
-        System.out.println("Clone   : " + clonedCB);
+        // System.out.println("--- Before Modification ---");
+        // System.out.println("Original: " + originalCB);
+        // System.out.println("Clone   : " + clonedCB);
 
-        clonedCB.price = 250; 
+        // clonedCB.price = 250; 
 
-        System.out.println("\n--- After Modifying Clone's Price to ₹250 ---");
-        System.out.println("Original: " + originalCB);
-        System.out.println("Clone   : " + clonedCB);
+        // System.out.println("\n--- After Modifying Clone's Price to ₹250 ---");
+        // System.out.println("Original: " + originalCB);
+        // System.out.println("Clone   : " + clonedCB);
 
-        System.out.println("\nAre they the exact same object in memory (==)? " + (originalCB == clonedCB));
+        // System.out.println("\nAre they the exact same object in memory (==)? " + (originalCB == clonedCB));
+
+        // Repository
+
+        // --- 1. Customer Repository ---
+        // Repository<Customer> customerRepo = new Repository<>();
+        // Customer c1 = new Customer(1, "Arun", "9876543210", new Address(12, "Anna St", "Chennai", 600001));
+        // Customer c2 = new Customer(2, "Meena", "9876543211", new Address(45, "Gandhi Rd", "Chennai", 600002));
+        // Customer c3 = new Customer(3, "Karthik", "9876543212", new Address(78, "Main Rd", "Chennai", 600003));
+        
+        // customerRepo.addObject(c1);
+        // customerRepo.addObject(c2);
+        // customerRepo.addObject(c3);
+
+        // // --- 2. Restaurant Repository ---
+        // Repository<Restaurant> restaurantRepo = new Repository<>();
+        // Restaurant r1 = new Restaurant(101, "Chennai Spice", "T. Nagar");
+        // Restaurant r2 = new Restaurant(102, "Anjappar", "Anna Nagar");
+        
+        // restaurantRepo.addObject(r1);
+        // restaurantRepo.addObject(r2);
+
+        // // --- 3. FoodItem Repository ---
+        // Repository<FoodItem> foodItemRepo = new Repository<>();
+        // foodItemRepo.addObject(new FoodItem(1, "Chicken Biryani", 220));
+        // foodItemRepo.addObject(new FoodItem(2, "Paneer Rice", 180));
+        // foodItemRepo.addObject(new FoodItem(3, "Fresh Lime", 60));
+        // foodItemRepo.addObject(new FoodItem(4, "Dosa", 50));
+        // foodItemRepo.addObject(new FoodItem(5, "Parotta", 40));
+
+        // // --- 4. Order Repository ---
+        // Repository<Order> orderRepo = new Repository<>();
+        // orderRepo.addObject(new Order(1, c1, r1, new FoodItem[]{foodItemRepo.getObject(0), foodItemRepo.getObject(2)}));
+        // orderRepo.addObject(new Order(2, c2, r2, new FoodItem[]{foodItemRepo.getObject(1)}));
+        // orderRepo.addObject(new Order(3, c3, r1, new FoodItem[]{foodItemRepo.getObject(3), foodItemRepo.getObject(4)}));
+
+        // // --- Display Size and Items ---
+        // System.out.println("Total Customers: " + customerRepo.size());
+        // for (Customer c : customerRepo.getAllObjects()) {
+        //     System.out.println("Customer: " + c);
+        // }
+
+        // System.out.println("\nTotal Restaurants: " + restaurantRepo.size());
+        // for (Restaurant r : restaurantRepo.getAllObjects()) {
+        //     System.out.println("Restaurant: " + r);
+        // }
+
+        // System.out.println("\nTotal Food Items: " + foodItemRepo.size());
+        // for (FoodItem f : foodItemRepo.getAllObjects()) {
+        //     System.out.println("Item: " + f);
+        // }
+
+        // System.out.println("\nTotal Orders: " + orderRepo.size());
+        // for (Order o : orderRepo.getAllObjects()) {
+        //     o.displayOrderInfo();
+        // }
+
+        // Pairs
+
+        // 1. Restaurant ID and Restaurant Name
+        Pair<Integer, String> restaurantPair = new Pair<>(101, "Chennai Spice");
+
+        // 2. Customer ID and Customer Name
+        Pair<Integer, String> customerPair = new Pair<>(1, "Arun Kumar");
+
+        // 3. Order ID and Order Status (using String or an Enum)
+        Pair<Integer, String> orderStatusPair = new Pair<>(1001, "DELIVERED");
+
+        // 4. Bonus: Different type combination (e.g. FoodItem name and Price)
+        Pair<String, Double> foodPricePair = new Pair<>("Chicken Biryani", 220.0);
+
+        // Display the values
+        System.out.println("Restaurant Pair: " + restaurantPair.getKey() + " = " + restaurantPair.getValue());
+        System.out.println("Customer Pair  : " + customerPair.getKey() + " = " + customerPair.getValue());
+        System.out.println("Order Status   : " + orderStatusPair.getKey() + " = " + orderStatusPair.getValue());
+        System.out.println("Food Price     : " + foodPricePair.getKey() + " = ₹" + foodPricePair.getValue());
+
+        // Full toString output
+        System.out.println("\nFormatted Pairs:");
+        System.out.println(restaurantPair);
+        System.out.println(foodPricePair);
     }
 }
