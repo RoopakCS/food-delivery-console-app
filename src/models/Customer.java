@@ -12,4 +12,9 @@ public class Customer extends User {
     public void displayRole() {
         System.out.println("I am a Customer");
     }
+
+    @Override
+    public String toString() {
+        return "I am " + name;
+    }
 }

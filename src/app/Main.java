@@ -53,7 +53,7 @@ public class Main {
 
         // Restaurant onwer
 
-        RestaurantOwner gordan = new RestaurantOwner(1, "Gordan Ramsay", "9786756456");
+        // RestaurantOwner gordan = new RestaurantOwner(1, "Gordan Ramsay", "9786756456");
         
         // roopak.displayRole();
         // gordan.displayRole();
@@ -83,18 +83,40 @@ public class Main {
 
         // Interfaces
 
-        Trackable trackableOrder = roopakOrder;
-        System.out.println(trackableOrder.trackOrder());
+        // Trackable trackableOrder = roopakOrder;
+        // System.out.println(trackableOrder.trackOrder());
 
-        Discountable discountableItem = vegBriyani;
-        System.out.println("Discount: ₹" + discountableItem.calculateDiscount());
+        // Discountable discountableItem = vegBriyani;
+        // System.out.println("Discount: ₹" + discountableItem.calculateDiscount());
 
-        SpecialOrder specialOrder = new SpecialOrder(1, "Festival Combo", 500);
+        // SpecialOrder specialOrder = new SpecialOrder(1, "Festival Combo", 500);
 
-        Trackable splTrackable = specialOrder;
-        Discountable spDiscountable = specialOrder;
+        // Trackable splTrackable = specialOrder;
+        // Discountable spDiscountable = specialOrder;
 
-        System.out.println(splTrackable.trackOrder());
-        System.out.println("Discount: ₹" + spDiscountable.calculateDiscount());
+        // System.out.println(splTrackable.trackOrder());
+        // System.out.println("Discount: ₹" + spDiscountable.calculateDiscount());
+
+        // Overriding toString()
+
+        // System.out.println(roopak);
+
+        // Object cloning
+
+        FoodItem originalCB = new FoodItem("Chicken Briyani", 220);
+
+        FoodItem clonedCB = originalCB.clone();
+
+        System.out.println("--- Before Modification ---");
+        System.out.println("Original: " + originalCB);
+        System.out.println("Clone   : " + clonedCB);
+
+        clonedCB.price = 250; 
+
+        System.out.println("\n--- After Modifying Clone's Price to ₹250 ---");
+        System.out.println("Original: " + originalCB);
+        System.out.println("Clone   : " + clonedCB);
+
+        System.out.println("\nAre they the exact same object in memory (==)? " + (originalCB == clonedCB));
     }
 }
