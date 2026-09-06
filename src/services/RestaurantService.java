@@ -1,6 +1,5 @@
 package services;
 
-import models.Restaurant;
 import utils.AppConfig;
 
 public class RestaurantService {

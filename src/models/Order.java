@@ -8,6 +8,7 @@ public class Order implements Trackable {
     private Customer customer;
     private Restaurant restaurant;
     private FoodItem[] foodItems;
+    private boolean isCompleted = false;
 
     public Order(Customer customer, Restaurant restaurant) {
         this(0, customer, restaurant, null);
@@ -39,6 +40,16 @@ public class Order implements Trackable {
     public FoodItem[] getFoodItems() {
         return foodItems;
     }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    // Setters
+
+    public void setCompleted(boolean completed) {
+        this.isCompleted = completed;
+    } 
 
     // Method for retrieving the current total
 

@@ -1,5 +1,7 @@
 package app;
 
+import exceptions.InvalidOrderException;
+import exceptions.PaymentException;
 import interfaces.Discountable;
 import interfaces.Trackable;
 import models.*;
@@ -19,30 +21,30 @@ public class Main {
         
         // Customers
         
-        Customer roopak = new Customer(1, "Roopak", "9994454835", new Address(254, "Senthamil Nagar", "Ramanathapuram", 623536));
+        // Customer roopak = new Customer(1, "Roopak", "9994454835", new Address(254, "Senthamil Nagar", "Ramanathapuram", 623536));
 
-        Customer madhu = new Customer(2, "Madhu Bashini", "7358115463", new Address(143, "Latheef Castle", "Ambattur", 600032));
+        // Customer madhu = new Customer(2, "Madhu Bashini", "7358115463", new Address(143, "Latheef Castle", "Ambattur", 600032));
         
-        // Restaurants
+        // // Restaurants
 
-        Restaurant geetham = new Restaurant(1, "Geetham", "Ambattur");
-        Restaurant sangeetha = new Restaurant(2, "Sangeetha", "Anna Nagar");
+        // Restaurant geetham = new Restaurant(1, "Geetham", "Ambattur");
+        // Restaurant sangeetha = new Restaurant(2, "Sangeetha", "Anna Nagar");
         
-        // Food items
+        // // Food items
 
-        FoodItem vegBriyani = new FoodItem(1, "Veg Briyani", 60);
-        FoodItem gobiFriedRice = new FoodItem(2, "Gobi Fried Rice", 100);
-        FoodItem gobi65 = new FoodItem(3, "Gobi 65", 40);
-        FoodItem pongal = new FoodItem(4, "Pongal", 60);
-        FoodItem sambarVada = new FoodItem(5, "Sambar Vada", 30);
+        // FoodItem vegBriyani = new FoodItem(1, "Veg Briyani", 60);
+        // FoodItem gobiFriedRice = new FoodItem(2, "Gobi Fried Rice", 100);
+        // FoodItem gobi65 = new FoodItem(3, "Gobi 65", 40);
+        // FoodItem pongal = new FoodItem(4, "Pongal", 60);
+        // FoodItem sambarVada = new FoodItem(5, "Sambar Vada", 30);
         
-        FoodItem water = new FoodItem("Water");
-        FoodItem dosa = new FoodItem("Dosa", 45);
+        // FoodItem water = new FoodItem("Water");
+        // FoodItem dosa = new FoodItem("Dosa", 45);
         
-        // Orders
+        // // Orders
 
-        Order roopakOrder = new Order(1, roopak, geetham, new FoodItem[]{sambarVada, vegBriyani});
-        Order madhuOrder = new Order(madhu, sangeetha);
+        // Order roopakOrder = new Order(1, roopak, geetham, new FoodItem[]{sambarVada, vegBriyani});
+        // Order madhuOrder = new Order(madhu, sangeetha);
         
         // roopakOrder.displayOrderInfo();
         // madhuOrder.displayOrderInfo();
@@ -178,27 +180,71 @@ public class Main {
 
         // Pairs
 
-        // 1. Restaurant ID and Restaurant Name
-        Pair<Integer, String> restaurantPair = new Pair<>(101, "Chennai Spice");
+        // // 1. Restaurant ID and Restaurant Name
+        // Pair<Integer, String> restaurantPair = new Pair<>(101, "Chennai Spice");
 
-        // 2. Customer ID and Customer Name
-        Pair<Integer, String> customerPair = new Pair<>(1, "Arun Kumar");
+        // // 2. Customer ID and Customer Name
+        // Pair<Integer, String> customerPair = new Pair<>(1, "Arun Kumar");
 
-        // 3. Order ID and Order Status (using String or an Enum)
-        Pair<Integer, String> orderStatusPair = new Pair<>(1001, "DELIVERED");
+        // // 3. Order ID and Order Status (using String or an Enum)
+        // Pair<Integer, String> orderStatusPair = new Pair<>(1001, "DELIVERED");
 
-        // 4. Bonus: Different type combination (e.g. FoodItem name and Price)
-        Pair<String, Double> foodPricePair = new Pair<>("Chicken Biryani", 220.0);
+        // // 4. Bonus: Different type combination (e.g. FoodItem name and Price)
+        // Pair<String, Double> foodPricePair = new Pair<>("Chicken Biryani", 220.0);
 
-        // Display the values
-        System.out.println("Restaurant Pair: " + restaurantPair.getKey() + " = " + restaurantPair.getValue());
-        System.out.println("Customer Pair  : " + customerPair.getKey() + " = " + customerPair.getValue());
-        System.out.println("Order Status   : " + orderStatusPair.getKey() + " = " + orderStatusPair.getValue());
-        System.out.println("Food Price     : " + foodPricePair.getKey() + " = ₹" + foodPricePair.getValue());
+        // // Display the values
+        // System.out.println("Restaurant Pair: " + restaurantPair.getKey() + " = " + restaurantPair.getValue());
+        // System.out.println("Customer Pair  : " + customerPair.getKey() + " = " + customerPair.getValue());
+        // System.out.println("Order Status   : " + orderStatusPair.getKey() + " = " + orderStatusPair.getValue());
+        // System.out.println("Food Price     : " + foodPricePair.getKey() + " = ₹" + foodPricePair.getValue());
 
-        // Full toString output
-        System.out.println("\nFormatted Pairs:");
-        System.out.println(restaurantPair);
-        System.out.println(foodPricePair);
+        // // Full toString output
+        // System.out.println("\nFormatted Pairs:");
+        // System.out.println(restaurantPair);
+        // System.out.println(foodPricePair);
+
+        // Exceptions
+
+        OrderService orderService = new OrderService();
+        Restaurant restaurant = new Restaurant(1, "Chennai Spice", "Anna Nagar");
+        Customer customer = new Customer(1, "Arun", "9876543210", new Address("MG Road", 600001));
+        Payment upi = new UPIPayment();
+
+        System.out.println("=== Starting Order Processing Tests ===\n");
+
+        // TEST 1: Empty food items
+        try {
+            System.out.println("Test 1: Processing empty order...");
+            Order emptyOrder = new Order(101, customer, restaurant, new FoodItem[]{});
+            orderService.processOrder(emptyOrder, upi, 100);
+        } catch (InvalidOrderException | PaymentException e) {
+            System.out.println("Handled Error: " + e.getMessage() + "\n");
+        }
+
+        // TEST 2: Invalid payment amount
+        try {
+            System.out.println("Test 2: Processing order with insufficient payment...");
+            FoodItem biryani = new FoodItem(1, "Biryani", 200);
+            Order normalOrder = new Order(102, customer, restaurant, new FoodItem[]{biryani});
+            // Total = 200 + delivery charge (50) = 250, but paying only 100
+            orderService.processOrder(normalOrder, upi, 100);
+        } catch (InvalidOrderException | PaymentException e) {
+            System.out.println("Handled Error: " + e.getMessage() + "\n");
+        }
+
+        // TEST 3: Already completed order
+        try {
+            System.out.println("Test 3: Processing order twice...");
+            FoodItem dosa = new FoodItem(2, "Dosa", 50);
+            Order validOrder = new Order(103, customer, restaurant, new FoodItem[]{dosa});
+            // First time - valid
+            orderService.processOrder(validOrder, upi, 200);
+            // Second time - triggers already completed error
+            orderService.processOrder(validOrder, upi, 200);
+        } catch (InvalidOrderException | PaymentException e) {
+            System.out.println("Handled Error: " + e.getMessage() + "\n");
+        }
+
+        System.out.println("=== Application finished safely without crashing! ===");
     }
 }
